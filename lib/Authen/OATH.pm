@@ -86,13 +86,13 @@ sub totp {
     my ( $self, $secret, $manual_time ) = @_;
     $secret = join( "", map chr( hex() ), $secret =~ /(..)/g )
       if $secret =~ /^[a-fA-F0-9]{32,}$/;
-    my $mod = $self->{ 'digest' };
+    my $mod = $self->digest;
     if ( eval "require $mod" ) {
         $mod->import();
     }
     my $time = $manual_time || time();
-    my $T = Math::BigInt->new( int( $time / $self->{ 'timestep' } ) );
-    die "Must request at least 6 digits" if $self->{ 'digits' } < 6;
+    my $T = Math::BigInt->new( int( $time / $self->timestep ) );
+    die "Must request at least 6 digits" if $self->digits < 6;
     ( my $hex = $T->as_hex ) =~ s/^0x(.*)/"0"x(16 - length $1) . $1/e;
     my $bin_code = join( "", map chr hex, $hex =~ /(..)/g );
     my $otp = _process( $self, $secret, $bin_code );
@@ -111,12 +111,12 @@ sub hotp {
     my ( $self, $secret, $c ) = @_;
     $secret = join( "", map chr( hex() ), $secret =~ /(..)/g )
       if $secret =~ /^[a-fA-F0-9]{32,}$/;
-    my $mod = $self->{ 'digest' };
+    my $mod = $self->digest;
     if ( eval "require $mod" ) {
         $mod->import();
     }
     $c = Math::BigInt->new( $c );
-    die "Must request at least 6 digits" if $self->{ 'digits' } < 6;
+    die "Must request at least 6 digits" if $self->digits < 6;
     ( my $hex = $c->as_hex ) =~ s/^0x(.*)/"0"x(16 - length $1) . $1/e;
     my $bin_code = join( "", map chr hex, $hex =~ /(..)/g );
     my $otp = _process( $self, $secret, $bin_code );
@@ -131,16 +131,16 @@ This is an internal routine and is never called directly.
 
 sub _process {
     my ( $self, $secret, $bin_code ) = @_;
-    my $hmac = Digest::HMAC->new( $secret, $self->{ 'digest' } );
+    my $hmac = Digest::HMAC->new( $secret, $self->digest );
     $hmac->add( $bin_code );
     my $hash   = $hmac->digest();
     my $offset = hex substr unpack( "H*" => $hash ), -1;
     my $dt     = unpack "N" => substr $hash, $offset, 4;
     $dt &= 0x7fffffff;
     $dt = Math::BigInt->new( $dt );
-    my $modulus = 10 ** $self->{ 'digits' };
+    my $modulus = 10 ** $self->digits;
 
-    if ( $self->{ 'digits' } < 10 ) {
+    if ( $self->digits < 10 ) {
         return sprintf( "%0$self->{ 'digits' }d", $dt->bmod( $modulus ) );
     }
     else {
