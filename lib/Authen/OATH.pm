@@ -28,6 +28,38 @@ has timestep => (
 
 =head1 SYNOPSIS
 
+    use Authen::OATH;
+
+    my $oath = Authen::OATH->new();
+    my $totp = $oath->totp( 'MySecretPassword' );
+    my $hotp = $oath->hotp( 'MyOtherSecretPassword' );
+
+Parameters may be overridden when creating the new object:
+
+    my $oath = Authen::OATH->new( digits => 8 );
+
+The three parameters are "digits", "digest", and "timestep."
+Timestep only applies to the totp() function.
+
+While strictly speaking this is outside the specifications of
+HOTP and TOTP, you can specify digests other than SHA1. For example:
+
+    my $oath = Authen::OATH->new(
+        digits => 10,
+        digest => 'Digest::MD6',
+    );
+
+If you are using Google Authenticator, you'll want to decode your secret
+*before* passing it to the C<totp> method:
+
+    use Convert::Base32 qw( decode_base32 );
+
+    my $oath = Authen::OATH->new;
+    my $secret = 'mySecret';
+    my $otp = $oath->totp(  decode_base32( $secret ) );
+
+=head1 DESCRIPTION
+
 Implementation of the HOTP and TOTP One Time Password algorithms
 as defined by OATH (http://www.openauthentication.org)
 
@@ -39,25 +71,6 @@ totp() and hotp() both default to returning 6 digits and using SHA1.
 As such, both can be called by passing only the secret key and a
 valid OTP will be returned.
 
-    use Authen::OATH;
-
-    my $oath = Authen::OATH->new();
-    my $totp = $oath->totp( "MySecretPassword" );
-    my $hotp = $oath->hotp( "MyOtherSecretPassword" );
-
-Parameters may be overridden when creating the new object:
-
-    my $oath = Authen::OATH->new( 'digits' => 8 );
-
-The three parameters are "digits", "digest", and "timestep."
-Timestep only applies to the totp() function.
-
-While strictly speaking this is outside the specifications of
-HOTP and TOTP, you can specify digests other than SHA1. For example:
-
-    my $oath = Authen::OATH->new( "digits" => 10,
-                                  "digest" => "Digest::MD6"
-    );
 
 =head1 SUBROUTINES/METHODS
 
@@ -137,41 +150,11 @@ sub _process {
 
 }
 
-=head1 BUGS
+=pod
 
-Please report any bugs or feature requests to C<bug-authen-totp at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Authen-OATH>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+=head1 CAVEATS
 
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Authen::OATH
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Authen-OATH>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Authen-OATH>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Authen-OATH>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Authen-OATH/>
-
-=back
+Please see the SYNOPSIS for how interaction with Google Authenticator.
 
 =cut
 
