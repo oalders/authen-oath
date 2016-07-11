@@ -11,8 +11,8 @@ on 'build' => sub {
 };
 
 on 'test' => sub {
+  requires "Digest::SHA1" => "0";
   requires "Test::More" => "0";
-  requires "Test::Simple" => "0";
   requires "perl" => "5.006";
 };
 
