@@ -1,18 +1,8 @@
-#!/usr/bin/perl
-################################################################################
-# $Id: OATH.pm 4 2010-05-25 16:18:21Z v89326 $
-# $URL: file:///S:/svn/Authen-OATH/trunk/lib/Authen/OATH.pm $
-################################################################################
-#
-# Title:   Authen::OATH
-# Author:  Kurt Kincaid
-# VERSION: 1.0.0
-#
-################################################################################
 package Authen::OATH;
 
 use warnings;
 use strict;
+
 use Digest::HMAC;
 use Math::BigInt;
 use Moose;
