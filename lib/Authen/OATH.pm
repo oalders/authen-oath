@@ -26,18 +26,6 @@ has timestep => (
     default => 30,
 );
 
-=head1 NAME
-
-Authen::OATH - OATH One Time Passwords
-
-=head1 VERSION
-
-Version 1.0.0
-
-=cut
-
-our $VERSION = "1.0.0";
-
 =head1 SYNOPSIS
 
 Implementation of the HOTP and TOTP One Time Password algorithms
@@ -149,10 +137,6 @@ sub _process {
 
 }
 
-=head1 AUTHOR
-
-Kurt Kincaid, C<< <kurt.kincaid at gmail.com> >>
-
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-authen-totp at rt.cpan.org>, or through
@@ -189,24 +173,8 @@ L<http://search.cpan.org/dist/Authen-OATH/>
 
 =back
 
-
-=head1 ACKNOWLEDGEMENTS
-
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2010 Kurt Kincaid.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
-
-
 =cut
 
 1;    # End of Authen::OATH
-
-################################################################################
-# EOF
+__END__
+#ABSTRACT: OATH One Time Passwords
