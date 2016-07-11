@@ -5,15 +5,17 @@ use warnings;
 use Authen::OATH;
 use Test::Simple tests => 20;
 
-
 my $pwd  = '12345678901234567890';
 my $oath = Authen::OATH->new();
 my $OATH = Authen::OATH->new( 'digits' => 8 );
-ok( defined $oath, "successfully created new object" );
-ok( $oath->isa( 'Authen::OATH' ), "correct class." );
-ok( $oath->{ 'digits' } == 6,     "default digits set to 6" );
-ok( $oath->{ 'digest' } eq 'Digest::SHA1', "default digest set to Digest::SHA1" );
-ok( $oath->{ 'timestep' } == 30, "default timestep set to 30" );
+ok( defined $oath,              "successfully created new object" );
+ok( $oath->isa('Authen::OATH'), "correct class." );
+ok( $oath->{'digits'} == 6,     "default digits set to 6" );
+ok(
+    $oath->{'digest'} eq 'Digest::SHA1',
+    "default digest set to Digest::SHA1"
+);
+ok( $oath->{'timestep'} == 30, "default timestep set to 30" );
 
 print "Checking test vectors for totp()...\n";
 ok( $OATH->totp( $pwd, 59 ) eq "94287082" );
@@ -33,5 +35,4 @@ ok( $oath->hotp( $pwd, 6 ) eq "287922" );
 ok( $oath->hotp( $pwd, 7 ) eq "162583" );
 ok( $oath->hotp( $pwd, 8 ) eq "399871" );
 ok( $oath->hotp( $pwd, 9 ) eq "520489" );
-
 

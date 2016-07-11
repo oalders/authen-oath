@@ -1,3 +1,4 @@
 Authen-OATH-*
 .build
 *.sw*
+.tidyall.d
