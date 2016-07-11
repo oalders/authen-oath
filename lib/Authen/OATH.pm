@@ -5,24 +5,25 @@ use strict;
 
 use Digest::HMAC;
 use Math::BigInt;
-use Moose;
+use Moo 2.002004;
+use Types::Standard qw( Int Str );
 
-has 'digits' => (
-    'is'      => 'rw',
-    'isa'     => 'Int',
-    'default' => 6
+has digits => (
+    is      => 'rw',
+    isa     => Int,
+    default => 6,
 );
 
-has 'digest' => (
-    'is'      => 'rw',
-    'isa'     => 'Str',
-    'default' => 'Digest::SHA1'
+has digest => (
+    is      => 'rw',
+    isa     => Str,
+    default => 'Digest::SHA1',
 );
 
-has 'timestep' => (
-    'is'      => 'rw',
-    'isa'     => 'Int',
-    'default' => 30
+has timestep => (
+    is      => 'rw',
+    isa     => Int,
+    default => 30,
 );
 
 =head1 NAME
@@ -39,31 +40,31 @@ our $VERSION = "1.0.0";
 
 =head1 SYNOPSIS
 
-Implementation of the HOTP and TOTP One Time Password algorithms 
+Implementation of the HOTP and TOTP One Time Password algorithms
 as defined by OATH (http://www.openauthentication.org)
 
-All necessary parameters are set by default, though these can be 
-overridden. Both totp() and htop() have passed all of the test 
+All necessary parameters are set by default, though these can be
+overridden. Both totp() and htop() have passed all of the test
 vectors defined in the RFC documents for TOTP and HOTP.
 
-totp() and hotp() both default to returning 6 digits and using SHA1. 
-As such, both can be called by passing only the secret key and a 
+totp() and hotp() both default to returning 6 digits and using SHA1.
+As such, both can be called by passing only the secret key and a
 valid OTP will be returned.
 
     use Authen::OATH;
 
     my $oath = Authen::OATH->new();
     my $totp = $oath->totp( "MySecretPassword" );
-    my $hotp = $oath->hotp( "MyOtherSecretPassword" ); 
-    
+    my $hotp = $oath->hotp( "MyOtherSecretPassword" );
+
 Parameters may be overridden when creating the new object:
 
     my $oath = Authen::OATH->new( 'digits' => 8 );
-    
-The three parameters are "digits", "digest", and "timestep." 
-Timestep only applies to the totp() function. 
 
-While strictly speaking this is outside the specifications of 
+The three parameters are "digits", "digest", and "timestep."
+Timestep only applies to the totp() function.
+
+While strictly speaking this is outside the specifications of
 HOTP and TOTP, you can specify digests other than SHA1. For example:
 
     my $oath = Authen::OATH->new( "digits" => 10,
@@ -75,8 +76,8 @@ HOTP and TOTP, you can specify digests other than SHA1. For example:
 =head2 totp
 
     my $otp = $oath->totp( $secret [, $manual_time ] );
-    
-Manual time is an optional parameter. If it is not passed, the current 
+
+Manual time is an optional parameter. If it is not passed, the current
 time is used. This is useful for testing purposes.
 
 =cut
@@ -101,7 +102,7 @@ sub totp {
 =head2 hotp
 
     my $opt = $oath->hotp( $secret, $counter );
-    
+
 Both parameters are required.
 
 =cut
