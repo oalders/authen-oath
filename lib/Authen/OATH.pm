@@ -95,7 +95,7 @@ sub totp {
     die "Must request at least 6 digits" if $self->digits < 6;
     ( my $hex = $T->as_hex ) =~ s/^0x(.*)/"0"x(16 - length $1) . $1/e;
     my $bin_code = join( "", map chr hex, $hex =~ /(..)/g );
-    my $otp = _process( $self, $secret, $bin_code );
+    my $otp = $self->_process( $secret, $bin_code );
     return $otp;
 }
 
@@ -119,7 +119,7 @@ sub hotp {
     die "Must request at least 6 digits" if $self->digits < 6;
     ( my $hex = $c->as_hex ) =~ s/^0x(.*)/"0"x(16 - length $1) . $1/e;
     my $bin_code = join( "", map chr hex, $hex =~ /(..)/g );
-    my $otp = _process( $self, $secret, $bin_code );
+    my $otp = $self->_process( $secret, $bin_code );
     return $otp;
 }
 
