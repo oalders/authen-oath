@@ -17,7 +17,7 @@ has digits => (
 has digest => (
     is      => 'rw',
     isa     => Str,
-    default => 'Digest::SHA1',
+    default => 'Digest::SHA',
 );
 
 has timestep => (

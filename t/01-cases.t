@@ -4,18 +4,18 @@ use strict;
 use warnings;
 
 use Authen::OATH;
-use Digest::SHA1;
+use Digest::SHA;
 use Test::More;
 
 my $pwd  = '12345678901234567890';
 my $oath = Authen::OATH->new();
 my $OATH = Authen::OATH->new( 'digits' => 8 );
 ok( defined $oath,              'successfully created new object' );
-ok( $oath->isa('Authen::OATH'), "correct class." );
-ok( $oath->{'digits'} == 6,     "default digits set to 6" );
+ok( $oath->isa('Authen::OATH'), 'correct class.' );
+ok( $oath->digits == 6,     'default digits set to 6' );
 ok(
-    $oath->{'digest'} eq 'Digest::SHA1',
-    'default digest set to Digest::SHA1'
+    $oath->digest eq 'Digest::SHA',
+    'default digest set to Digest::SHA'
 );
 ok( $oath->{'timestep'} == 30, 'default timestep set to 30' );
 
