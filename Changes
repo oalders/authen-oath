@@ -1,5 +1,13 @@
 Revision history for Authen-OATH
 
-1.0.0    Date/time
-        First version, released on an unsuspecting world.
+{{$NEXT}}
+   - Bumped to next major version (2.0.0) because digest now defaults to
+     Digest::SHA rather than Digest::SHA1.  See
+     https://rt.cpan.org/Ticket/Display.html?id=76188
+   - Added docs on working with Google Authenticator.  See
+     https://rt.cpan.org/Ticket/Display.html?id=67777
+   - Converted from Moose to Moo + Type::Tiny.
+   - Other internal cleanup.
 
+1.0.0 2010-05-25
+        First version, released on an unsuspecting world.
