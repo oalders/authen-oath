@@ -6,7 +6,7 @@ Authen::OATH - OATH One Time Passwords
 
 # VERSION
 
-version 2.0.0
+version 2.0.1
 
 # SYNOPSIS
 
@@ -82,7 +82,7 @@ Kurt Kincaid <kurt.kincaid@gmail.com>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Kurt Kincaid.
+This software is copyright (c) 2010-2017 by Kurt Kincaid.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
