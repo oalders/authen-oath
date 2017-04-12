@@ -9,7 +9,7 @@ requires "warnings" => "0";
 on 'test' => sub {
   requires "Digest::SHA" => "0";
   requires "Test::More" => "0";
-  requires "bignum" => "0";
+  requires "Test::Needs" => "0";
   requires "perl" => "5.006";
 };
 

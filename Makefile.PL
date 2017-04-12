@@ -27,7 +27,7 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "Digest::SHA" => 0,
     "Test::More" => 0,
-    "bignum" => 0
+    "Test::Needs" => 0
   },
   "VERSION" => "2.0.0",
   "test" => {
@@ -42,8 +42,8 @@ my %FallbackPrereqs = (
   "Math::BigInt" => 0,
   "Moo" => "2.002004",
   "Test::More" => 0,
+  "Test::Needs" => 0,
   "Types::Standard" => 0,
-  "bignum" => 0,
   "strict" => 0,
   "warnings" => 0
 );
