@@ -53,7 +53,7 @@
          "requires" : {
             "Digest::SHA" : "0",
             "Test::More" : "0",
-            "bignum" : "0",
+            "Test::Needs" : "0",
             "perl" : "5.006"
          }
       }

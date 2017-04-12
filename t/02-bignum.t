@@ -16,10 +16,10 @@ use warnings;
 # inferring $_ when called without arguments."
 #
 
-use bignum;
-use Authen::OATH;
-use Digest::SHA;
+use Authen::OATH ();
+use Digest::SHA ();
 use Test::More;
+use Test::Needs 'bignum';
 
 my $pwd  = '12345678901234567890';
 my $oath = Authen::OATH->new();
