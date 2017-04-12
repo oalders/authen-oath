@@ -17,7 +17,7 @@ use warnings;
 #
 
 use Authen::OATH ();
-use Digest::SHA ();
+use Digest::SHA  ();
 use Test::More;
 use Test::Needs 'bignum';
 
