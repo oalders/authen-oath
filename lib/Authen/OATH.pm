@@ -85,7 +85,7 @@ time is used. This is useful for testing purposes.
 
 sub totp {
     my ( $self, $secret, $manual_time ) = @_;
-    $secret = join( "", map chr( hex() ), $secret =~ /(..)/g )
+    $secret = join( "", map chr( hex($_) ), $secret =~ /(..)/g )
         if $secret =~ /^[a-fA-F0-9]{32,}$/;
     my $mod = $self->digest;
     if ( eval "require $mod" ) {
@@ -95,7 +95,7 @@ sub totp {
     my $T = Math::BigInt->new( int( $time / $self->timestep ) );
     die "Must request at least 6 digits" if $self->digits < 6;
     ( my $hex = $T->as_hex ) =~ s/^0x(.*)/"0"x(16 - length $1) . $1/e;
-    my $bin_code = join( "", map chr hex, $hex =~ /(..)/g );
+    my $bin_code = join( "", map chr( hex($_) ), $hex =~ /(..)/g );
     my $otp = $self->_process( $secret, $bin_code );
     return $otp;
 }
@@ -110,7 +110,7 @@ Both parameters are required.
 
 sub hotp {
     my ( $self, $secret, $c ) = @_;
-    $secret = join( "", map chr( hex() ), $secret =~ /(..)/g )
+    $secret = join( "", map chr( hex($_) ), $secret =~ /(..)/g )
         if $secret =~ /^[a-fA-F0-9]{32,}$/;
     my $mod = $self->digest;
     if ( eval "require $mod" ) {
@@ -119,7 +119,7 @@ sub hotp {
     $c = Math::BigInt->new($c);
     die "Must request at least 6 digits" if $self->digits < 6;
     ( my $hex = $c->as_hex ) =~ s/^0x(.*)/"0"x(16 - length $1) . $1/e;
-    my $bin_code = join( "", map chr hex, $hex =~ /(..)/g );
+    my $bin_code = join( "", map chr( hex($_) ), $hex =~ /(..)/g );
     my $otp = $self->_process( $secret, $bin_code );
     return $otp;
 }
