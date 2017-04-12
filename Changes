@@ -1,6 +1,8 @@
 Revision history for Authen-OATH
 
 {{$NEXT}}
+
+2.0.0     2016-07-11 14:49:12-04:00 America/Toronto
    - Bumped to next major version (2.0.0) because digest now defaults to
      Digest::SHA rather than Digest::SHA1.  See
      https://rt.cpan.org/Ticket/Display.html?id=76188
