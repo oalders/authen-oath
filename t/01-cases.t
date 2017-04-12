@@ -12,7 +12,7 @@ my $oath = Authen::OATH->new();
 my $OATH = Authen::OATH->new( 'digits' => 8 );
 ok( defined $oath,              'successfully created new object' );
 ok( $oath->isa('Authen::OATH'), 'correct class.' );
-ok( $oath->digits == 6,     'default digits set to 6' );
+ok( $oath->digits == 6,         'default digits set to 6' );
 ok(
     $oath->digest eq 'Digest::SHA',
     'default digest set to Digest::SHA'
