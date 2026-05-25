@@ -29,31 +29,32 @@ jobs:
           name: build_dir
           path: build_dir/
 
-  coverage-job:
-    needs: build
-    runs-on: ubuntu-latest
-    container:
-      image: perldocker/perl-tester:5.42
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: build_dir
-          path: .
-      - name: Install deps
-        uses: perl-actions/install-with-cpm@v2
-        with:
-          cpanfile: cpanfile
-          args: "--with-recommends --with-suggests --with-test"
-          sudo: false
-      - name: Run tests with coverage
-        run: cover -test -report clover
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./cover_db/clover.xml
-          fail_ci_if_error: false
+  # Coverage disabled until CODECOV_TOKEN is configured for this repo.
+  # coverage-job:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: perldocker/perl-tester:5.42
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: build_dir
+  #         path: .
+  #     - name: Install deps
+  #       uses: perl-actions/install-with-cpm@v2
+  #       with:
+  #         cpanfile: cpanfile
+  #         args: "--with-recommends --with-suggests --with-test"
+  #         sudo: false
+  #     - name: Run tests with coverage
+  #       run: cover -test -report clover
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v6
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         files: ./cover_db/clover.xml
+  #         fail_ci_if_error: false
 
   test_linux:
     name: Perl ${{ matrix.perl-version }} on linux
