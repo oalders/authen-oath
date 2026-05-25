@@ -4,10 +4,12 @@ use strict;
 use warnings;
 use Test::More;
 
-unless ( $ENV{RELEASE_TESTING} ) {
-    plan( skip_all => "Author tests not required for installation" );
+BEGIN {
+    plan skip_all => "Author tests not required for installation"
+        unless $ENV{RELEASE_TESTING};
 }
 
-eval "use Test::CheckManifest 0.9";
-plan skip_all => "Test::CheckManifest 0.9 required" if $@;
+use Test::Needs { 'Test::CheckManifest' => '0.9' };
+
+Test::CheckManifest->import;
 ok_manifest();

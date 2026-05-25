@@ -3,10 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Needs { 'Test::Pod' => '1.22' };
 
-# Ensure a recent version of Test::Pod
-my $min_tp = 1.22;
-eval "use Test::Pod $min_tp";
-plan skip_all => "Test::Pod $min_tp required for testing POD" if $@;
-
+Test::Pod->import;
 all_pod_files_ok();
