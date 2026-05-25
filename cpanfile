@@ -1,5 +1,6 @@
 requires "Digest::HMAC" => "0";
 requires "Math::BigInt" => "0";
+requires "Module::Runtime" => "0";
 requires "Moo" => "2.002004";
 requires "Types::Standard" => "0";
 requires "perl" => "5.006";
