@@ -3,7 +3,7 @@ package Authen::OATH;
 use warnings;
 use strict;
 
-our $VERSION = '3.000000';
+our $VERSION = '3.000001';
 
 use Digest::HMAC;
 use Math::BigInt;

@@ -1,5 +1,7 @@
 Revision history for Authen-OATH
 
+{{$NEXT}}
+
 3.000000  2026-05-25 20:28:30Z
    - Bumped to version 3.000000 and adopted decimal versioning.
    - Fixed arbitrary code execution vulnerability via the digest attribute.
