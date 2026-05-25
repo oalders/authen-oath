@@ -1,0 +1,134 @@
+name: dzil build and test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    container:
+      image: perldocker/perl-tester:5.42
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build dist
+        run: |
+          dzil authordeps --missing | cpanm --notest
+          dzil listdeps --develop --missing | cpanm --notest
+          dzil build --in build_dir
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build_dir
+          path: build_dir/
+
+  # Coverage disabled until CODECOV_TOKEN is configured for this repo.
+  # coverage-job:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: perldocker/perl-tester:5.42
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: build_dir
+  #         path: .
+  #     - name: Install deps
+  #       uses: perl-actions/install-with-cpm@v2
+  #       with:
+  #         cpanfile: cpanfile
+  #         args: "--with-recommends --with-suggests --with-test"
+  #         sudo: false
+  #     - name: Run tests with coverage
+  #       run: cover -test -report clover
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v6
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         files: ./cover_db/clover.xml
+  #         fail_ci_if_error: false
+
+  test_linux:
+    name: Perl ${{ matrix.perl-version }} on linux
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl-version:
+          - "5.10"
+          - "5.12"
+          - "5.14"
+          - "5.16"
+          - "5.18"
+          - "5.20"
+          - "5.22"
+          - "5.24"
+          - "5.26"
+          - "5.28"
+          - "5.30"
+          - "5.32"
+          - "5.34"
+          - "5.36"
+          - "5.38"
+          - "5.40"
+          - "5.42"
+    container:
+      image: perldocker/perl-tester:${{ matrix.perl-version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: build_dir
+          path: .
+      - name: Install deps
+        uses: perl-actions/install-with-cpm@v2
+        with:
+          cpanfile: cpanfile
+          args: "--with-recommends --with-suggests --with-test"
+          sudo: false
+          # App::cpm v0.999.0+ requires Perl 5.24+; pin older Perls to the last compatible release.
+          version: ${{ matrix.perl-version <= '5.22' && '0.998003' || 'main' }}
+      - name: Run tests
+        run: prove -lr t
+
+  test_macos:
+    name: Perl ${{ matrix.perl-version }} on macos
+    needs: build
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl-version:
+          - "5.30"
+          - "5.32"
+          - "5.34"
+          - "5.36"
+          - "5.38"
+          - "5.40"
+          - "5.42"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: build_dir
+          path: .
+      - name: Install deps
+        uses: perl-actions/install-with-cpm@v2
+        with:
+          cpanfile: cpanfile
+          args: "--with-recommends --with-suggests --with-test"
+          sudo: false
+      - name: Run tests
+        run: prove -lr t
