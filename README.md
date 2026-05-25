@@ -2,11 +2,9 @@
 
 Authen::OATH - OATH One Time Passwords
 
-[![Build Status](https://travis-ci.org/oalders/authen-oath.png?branch=master)](https://travis-ci.org/oalders/authen-oath)
-
 # VERSION
 
-version 2.0.1
+version 3.000000
 
 # SYNOPSIS
 
