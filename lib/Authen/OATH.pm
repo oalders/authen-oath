@@ -3,6 +3,8 @@ package Authen::OATH;
 use warnings;
 use strict;
 
+our $VERSION = '3.000000';
+
 use Digest::HMAC;
 use Math::BigInt;
 use Module::Runtime qw( is_module_name require_module );
