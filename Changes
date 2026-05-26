@@ -2,6 +2,11 @@ Revision history for Authen-OATH
 
 {{$NEXT}}
    - Note: the 3.000000 release was a fix for CVE-2026-9569.
+   - Converted the test suite to Test2::V0.
+   - Removed redundant t/00-load.t (every other test already loads
+     Authen::OATH).
+   - t/02-bignum.t now actually loads bignum; the previous use of
+     Test::Needs only gated on availability without importing it.
 
 3.000000  2026-05-25 20:28:30Z
    - Bumped to version 3.000000 and adopted decimal versioning.
