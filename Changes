@@ -1,6 +1,6 @@
 Revision history for Authen-OATH
 
-{{$NEXT}}
+3.000001  2026-05-26 21:01:25Z
    - Note: the 3.000000 release was a fix for CVE-2026-9569.
    - Converted the test suite to Test2::V0.
    - Removed redundant t/00-load.t (every other test already loads
