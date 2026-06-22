@@ -18,7 +18,7 @@ jobs:
     container:
       image: perldocker/perl-tester:5.42
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - name: Build dist
         run: |
           dzil authordeps --missing | cpanm --notest
@@ -36,7 +36,7 @@ jobs:
   #   container:
   #     image: perldocker/perl-tester:5.42
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v6.0.3
   #     - uses: actions/download-artifact@v8
   #       with:
   #         name: build_dir
@@ -84,7 +84,7 @@ jobs:
     container:
       image: perldocker/perl-tester:${{ matrix.perl-version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: actions/download-artifact@v8
         with:
           name: build_dir
@@ -116,7 +116,7 @@ jobs:
           - "5.40"
           - "5.42"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl-version }}
